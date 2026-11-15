@@ -1,0 +1,255 @@
+{
+ "updated": "2026-11-15 11:32 IST",
+ "predictions": [
+  {
+   "date": "2026-10-30",
+   "p_up": 0.539,
+   "pred": "UP",
+   "confident": false,
+   "stage": "replay",
+   "made_at": "2026-11-15 11:31 IST",
+   "trained_on_days": 2659,
+   "last_finished_day": "2026-10-29",
+   "inputs": {
+    "sp500_night": -0.3,
+    "usvix_night": 1.71,
+    "crude_night": -0.76,
+    "usdinr_night": 0.03,
+    "nikkei_gap": -0.49,
+    "hangseng_gap": 0.23
+   },
+   "asia_open": {
+    "nikkei": true,
+    "hangseng": true
+   },
+   "actual": "UP",
+   "ret": 0.51,
+   "correct": true
+  },
+  {
+   "date": "2026-11-02",
+   "p_up": 0.463,
+   "pred": "DOWN",
+   "confident": false,
+   "stage": "replay",
+   "made_at": "2026-11-15 11:31 IST",
+   "trained_on_days": 2660,
+   "last_finished_day": "2026-10-30",
+   "inputs": {
+    "sp500_night": -1.82,
+    "usvix_night": 12.91,
+    "crude_night": 2.08,
+    "usdinr_night": -0.06,
+    "nikkei_gap": -0.5,
+    "hangseng_gap": 0.03
+   },
+   "asia_open": {
+    "nikkei": true,
+    "hangseng": true
+   },
+   "actual": "UP",
+   "ret": 1.68,
+   "correct": false
+  },
+  {
+   "date": "2026-11-03",
+   "p_up": 0.567,
+   "pred": "UP",
+   "confident": false,
+   "stage": "replay",
+   "made_at": "2026-11-15 11:31 IST",
+   "trained_on_days": 2661,
+   "last_finished_day": "2026-11-02",
+   "inputs": {
+    "sp500_night": -0.51,
+    "usvix_night": 8.91,
+    "crude_night": -7.36,
+    "usdinr_night": -0.26,
+    "nikkei_gap": 0.0,
+    "hangseng_gap": 0.33
+   },
+   "asia_open": {
+    "nikkei": false,
+    "hangseng": true
+   },
+   "actual": "UP",
+   "ret": 1.58,
+   "correct": true
+  },
+  {
+   "date": "2026-11-04",
+   "p_up": 0.53,
+   "pred": "UP",
+   "confident": false,
+   "stage": "replay",
+   "made_at": "2026-11-15 11:31 IST",
+   "trained_on_days": 2662,
+   "last_finished_day": "2026-11-03",
+   "inputs": {
+    "sp500_night": 0.36,
+    "usvix_night": -1.51,
+    "crude_night": -0.38,
+    "usdinr_night": -0.19,
+    "nikkei_gap": -0.17,
+    "hangseng_gap": -0.32
+   },
+   "asia_open": {
+    "nikkei": true,
+    "hangseng": true
+   },
+   "actual": "UP",
+   "ret": 0.63,
+   "correct": true
+  },
+  {
+   "date": "2026-11-05",
+   "p_up": 0.704,
+   "pred": "UP",
+   "confident": true,
+   "stage": "replay",
+   "made_at": "2026-11-15 11:31 IST",
+   "trained_on_days": 2663,
+   "last_finished_day": "2026-11-04",
+   "inputs": {
+    "sp500_night": 1.58,
+    "usvix_night": -20.26,
+    "crude_night": -8.29,
+    "usdinr_night": 0.02,
+    "nikkei_gap": 0.32,
+    "hangseng_gap": 1.66
+   },
+   "asia_open": {
+    "nikkei": true,
+    "hangseng": true
+   },
+   "actual": "UP",
+   "ret": 2.4,
+   "correct": true
+  },
+  {
+   "date": "2026-11-06",
+   "p_up": 0.281,
+   "pred": "DOWN",
+   "confident": true,
+   "stage": "replay",
+   "made_at": "2026-11-15 11:31 IST",
+   "trained_on_days": 2664,
+   "last_finished_day": "2026-11-05",
+   "inputs": {
+    "sp500_night": -4.36,
+    "usvix_night": 69.66,
+    "crude_night": 2.72,
+    "usdinr_night": -0.25,
+    "nikkei_gap": -1.15,
+    "hangseng_gap": -1.58
+   },
+   "asia_open": {
+    "nikkei": true,
+    "hangseng": true
+   },
+   "actual": "UP",
+   "ret": 2.01,
+   "correct": false
+  },
+  {
+   "date": "2026-11-09",
+   "p_up": 0.681,
+   "pred": "UP",
+   "confident": true,
+   "stage": "replay",
+   "made_at": "2026-11-15 11:31 IST",
+   "trained_on_days": 2665,
+   "last_finished_day": "2026-11-06",
+   "inputs": {
+    "sp500_night": 0.31,
+    "usvix_night": -9.01,
+    "crude_night": 0.34,
+    "usdinr_night": -0.06,
+    "nikkei_gap": 0.92,
+    "hangseng_gap": 0.59
+   },
+   "asia_open": {
+    "nikkei": true,
+    "hangseng": true
+   },
+   "actual": "UP",
+   "ret": 0.06,
+   "correct": true
+  },
+  {
+   "date": "2026-11-11",
+   "p_up": 0.579,
+   "pred": "UP",
+   "confident": false,
+   "stage": "replay",
+   "made_at": "2026-11-15 11:31 IST",
+   "trained_on_days": 2666,
+   "last_finished_day": "2026-11-09",
+   "inputs": {
+    "sp500_night": 1.95,
+    "usvix_night": -24.1,
+    "crude_night": -5.27,
+    "usdinr_night": -0.54,
+    "nikkei_gap": 0.11,
+    "hangseng_gap": -0.83
+   },
+   "asia_open": {
+    "nikkei": true,
+    "hangseng": true
+   },
+   "actual": "UP",
+   "ret": 0.84,
+   "correct": true
+  },
+  {
+   "date": "2026-11-12",
+   "p_up": 0.589,
+   "pred": "UP",
+   "confident": false,
+   "stage": "replay",
+   "made_at": "2026-11-15 11:32 IST",
+   "trained_on_days": 2667,
+   "last_finished_day": "2026-11-11",
+   "inputs": {
+    "sp500_night": 1.31,
+    "usvix_night": -10.12,
+    "crude_night": 0.57,
+    "usdinr_night": -0.02,
+    "nikkei_gap": 0.37,
+    "hangseng_gap": -0.8
+   },
+   "asia_open": {
+    "nikkei": true,
+    "hangseng": true
+   },
+   "actual": "UP",
+   "ret": 0.18,
+   "correct": true
+  },
+  {
+   "date": "2026-11-13",
+   "p_up": 0.484,
+   "pred": "DOWN",
+   "confident": false,
+   "stage": "replay",
+   "made_at": "2026-11-15 11:32 IST",
+   "trained_on_days": 2668,
+   "last_finished_day": "2026-11-12",
+   "inputs": {
+    "sp500_night": -0.35,
+    "usvix_night": 6.92,
+    "crude_night": 2.55,
+    "usdinr_night": -0.24,
+    "nikkei_gap": 0.66,
+    "hangseng_gap": -0.57
+   },
+   "asia_open": {
+    "nikkei": true,
+    "hangseng": true
+   },
+   "actual": "DOWN",
+   "ret": -0.61,
+   "correct": true
+  }
+ ]
+}

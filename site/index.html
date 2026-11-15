@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NIFTY 50 Direction | Pre-market ML signal</title>
+  <meta name="description" content="A machine learning model that predicts, before the market opens, whether NIFTY 50 will close up or down today. Semester ML project by Harshul Saini and Vishesh Gupta.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%2305060a'/><path d='M6 22l7-8 5 4 8-10' fill='none' stroke='%2300f0ff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#top"><span class="grad">NIFTY</span>&nbsp;direction</a>
+  <div class="links">
+    <a href="#how">How it works</a>
+    <a href="#results">Results</a>
+    <a href="#money">Reality check</a>
+    <a href="#record">Track record</a>
+    <a class="btn small" href="https://github.com/Harshul0025/nifty-direction" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header id="top" class="hero">
+  <div class="hero-text">
+    <p class="eyebrow mono">Machine learning project · NIFTY 50</p>
+    <h1>Will NIFTY close <span class="grad">up or down</span> today?</h1>
+    <p class="lead">
+      Every trading morning, before the market opens, our model reads what happened overnight
+      in the US, in oil, in the rupee and in the Asian markets. Then it gives one answer:
+      will NIFTY 50 close above or below yesterday's close.
+    </p>
+    <div class="hero-buttons">
+      <a class="btn" href="#results">See how good it is</a>
+      <a class="btn ghost" href="https://github.com/Harshul0025/nifty-direction/blob/main/nifty_direction.ipynb" target="_blank" rel="noopener">Open the notebook</a>
+    </div>
+    <p class="note">A college project. This is not investment advice. <a href="#money">Read why you cannot trade it.</a></p>
+  </div>
+
+  <div class="signal card glow" id="signal">
+    <div class="signal-top">
+      <span class="mono muted" id="sig-title">Today's signal</span>
+      <span class="badge" id="sig-stage"></span>
+    </div>
+    <div class="signal-date" id="sig-date">Loading…</div>
+
+    <svg class="gauge" viewBox="0 0 220 128" role="img" aria-labelledby="gauge-title">
+      <title id="gauge-title">Chance that NIFTY closes up today</title>
+      <path id="zone-down" class="zone down"/>
+      <path id="zone-mid" class="zone mid"/>
+      <path id="zone-up" class="zone up"/>
+      <g id="needle"><line x1="110" y1="110" x2="110" y2="34"/><circle cx="110" cy="110" r="6"/></g>
+      <text x="14" y="126" class="gauge-label">DOWN</text>
+      <text x="206" y="126" class="gauge-label" text-anchor="end">UP</text>
+    </svg>
+    <div class="gauge-number"><span id="sig-pct">–</span><small>chance of closing UP</small></div>
+
+    <div class="verdict" id="sig-verdict"></div>
+    <div class="verdict-sub" id="sig-sub"></div>
+    <div class="outcome" id="sig-outcome"></div>
+    <div class="verdict-sub" id="sig-next"></div>
+
+    <div class="inputs-title mono muted">What the model saw that morning</div>
+    <div class="chips" id="sig-inputs"></div>
+    <div class="signal-foot mono muted" id="sig-foot"></div>
+  </div>
+</header>
+
+<!-- ================= HEADLINE NUMBERS ================= -->
+<section class="tiles">
+  <div class="tile card">
+    <div class="tile-value"><span data-v="ablation.full_acc" data-fmt="pct"></span>%</div>
+    <div class="tile-label">correct on <span data-v="data.test_days"></span> days it had never seen</div>
+    <div class="tile-sub">The simple rule "follow the US" gets <span data-v="follow_us_test" data-fmt="pct"></span>% on the same days.</div>
+  </div>
+  <div class="tile card">
+    <div class="tile-value"><span data-v="walk_forward.acc" data-fmt="pct"></span>%</div>
+    <div class="tile-label">correct over 2019 to 2026, re-trained every 3 months</div>
+    <div class="tile-sub">"Follow the US" gets <span data-v="walk_forward.follow_us_acc" data-fmt="pct"></span>% over the same years.</div>
+  </div>
+  <div class="tile card">
+    <div class="tile-value"><span data-v="walk_forward.confident_acc" data-fmt="pct"></span>%</div>
+    <div class="tile-label">correct on days when the model is confident</div>
+    <div class="tile-sub">That is about <span data-v="walk_forward.confident_share"></span>% of all days (chance above 60% or below 40%).</div>
+  </div>
+  <div class="tile card">
+    <div class="tile-value"><span data-v="money.open_to_close_acc" data-fmt="pct"></span>%</div>
+    <div class="tile-label">correct for the open-to-close move, the part you can trade</div>
+    <div class="tile-sub">That is a coin flip. The model predicts the day, but not a profit.</div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section id="how">
+  <h2><span class="mono num">01</span> How it works</h2>
+  <p class="section-lead">
+    India sleeps while the US trades. By the time NSE opens at 9:15 AM, a lot of news is already known.
+    The model uses only information that is available before 9:00 AM.
+  </p>
+
+  <ol class="timeline">
+    <li><time class="mono">2:30 AM</time><b>US market closes</b><span>S&amp;P 500, US VIX, crude oil and USD/INR moves are known.</span></li>
+    <li><time class="mono">5:30 AM</time><b>Tokyo opens</b><span>The opening gap of the Nikkei 225.</span></li>
+    <li><time class="mono">7:00 AM</time><b>Hong Kong opens</b><span>The opening gap of the Hang Seng.</span></li>
+    <li class="now"><time class="mono">7:50 AM</time><b>Model runs</b><span>It is trained again on every finished day, then predicts today.</span></li>
+    <li><time class="mono">9:15 AM</time><b>NSE opens</b><span>The prediction is already locked.</span></li>
+    <li><time class="mono">3:30 PM</time><b>NSE closes</b><span>The real result is written next to the prediction.</span></li>
+  </ol>
+  <p class="fine">All times are Indian Standard Time. The US close is 1:30 AM in the US summer.</p>
+
+  <div class="grid three">
+    <div class="card step">
+      <div class="mono step-k">Data</div>
+      <h3>10 markets, since 2015</h3>
+      <p>Daily prices of NIFTY 50, Bank NIFTY, India VIX, S&amp;P 500, NASDAQ, US VIX, crude oil, USD/INR, Nikkei 225 and Hang Seng from Yahoo Finance. That gives <span data-v="data.days" data-fmt="int"></span> usable days.</p>
+    </div>
+    <div class="card step">
+      <div class="mono step-k">Features</div>
+      <h3><span data-v="data.features"></span> inputs per day</h3>
+      <p>18 describe yesterday's NIFTY (returns, RSI, MACD, volatility, volume). 6 describe the night: the US, oil, the rupee, and the opening gaps in Japan and Hong Kong.</p>
+    </div>
+    <div class="card step">
+      <div class="mono step-k">Model</div>
+      <h3>Three models vote</h3>
+      <p>Logistic Regression, Random Forest and XGBoost each give a probability. The final answer is their average (soft voting). It was chosen on validation data, before the test set was touched.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESULTS ================= -->
+<section id="results">
+  <h2><span class="mono num">02</span> Results</h2>
+  <p class="section-lead">
+    The last 20% of the data (<span data-v="data.test_from" data-fmt="month"></span> to <span data-v="data.test_to" data-fmt="month"></span>)
+    was kept away from the model. In that period NIFTY closed up on <span data-v="data.test_up_share" data-fmt="pct"></span>% of days,
+    so always guessing UP gives about half.
+  </p>
+
+  <div class="grid two">
+    <div class="card chart-card">
+      <h3>Models against simple rules</h3>
+      <p class="chart-sub">Accuracy on the unseen test days. The line at 50% is a coin flip.</p>
+      <div class="legend" id="dots-legend"></div>
+      <div class="dotplot" id="chart-models"></div>
+      <details class="table-view"><summary>Show as table</summary><div id="table-models"></div></details>
+    </div>
+
+    <div class="card chart-card">
+      <h3>More sure means more right</h3>
+      <p class="chart-sub">Test accuracy when we keep only the days where the model is sure enough.</p>
+      <div class="bars" id="chart-confidence"></div>
+      <details class="table-view"><summary>Show as table</summary><div id="table-confidence"></div></details>
+    </div>
+
+    <div class="card chart-card wide">
+      <h3>Accuracy in each year</h3>
+      <p class="chart-sub">Walk-forward check: the model is trained again every 63 trading days and only ever sees the past.</p>
+      <div class="legend" id="legend-years"></div>
+      <div class="canvas-box"><canvas id="chart-years"></canvas></div>
+      <details class="table-view"><summary>Show as table</summary><div id="table-years"></div></details>
+    </div>
+
+    <div class="card chart-card">
+      <h3>What the model really uses</h3>
+      <p class="chart-sub">Drop in test AUC when one input is shuffled. Bigger drop means the model depends on it more.</p>
+      <div class="legend" id="legend-importance"></div>
+      <div class="bars" id="chart-importance"></div>
+      <details class="table-view"><summary>Show as table</summary><div id="table-importance"></div></details>
+    </div>
+
+    <div class="card chart-card">
+      <h3>The night is the whole edge</h3>
+      <p class="chart-sub">Same model, same test days, trained with and without the 6 overnight inputs.</p>
+      <div class="versus">
+        <div>
+          <div class="versus-value"><span data-v="ablation.yesterday_only_acc" data-fmt="pct"></span>%</div>
+          <div class="versus-label">only yesterday's information</div>
+        </div>
+        <div class="versus-arrow" aria-hidden="true">→</div>
+        <div>
+          <div class="versus-value strong"><span data-v="ablation.full_acc" data-fmt="pct"></span>%</div>
+          <div class="versus-label">with the overnight information</div>
+        </div>
+      </div>
+      <p class="chart-note">Yesterday's chart alone says almost nothing about today. This agrees with the efficient market idea: old prices are already in the price.</p>
+
+      <h3 class="mt">Where it goes wrong</h3>
+      <p class="chart-sub">All <span data-v="data.test_days"></span> test days, by what the model said and what happened.</p>
+      <div class="confusion" id="confusion"></div>
+      <p class="chart-note">The model says UP too often. Most of its mistakes are UP calls on days that closed down.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REALITY CHECK ================= -->
+<section id="money">
+  <h2><span class="mono num">03</span> Reality check: can you make money with it?</h2>
+  <p class="section-lead">
+    No. The model predicts yesterday's close to today's close. But most of that move happens at the open,
+    as a gap, before anyone can buy. After the open, the direction is a coin flip
+    (<span data-v="money.open_to_close_acc" data-fmt="pct"></span>% correct).
+  </p>
+
+  <div class="card chart-card">
+    <h3>Growth of 1 rupee, 2019 to 2026</h3>
+    <p class="chart-sub">Log scale. The "impossible" line needs you to buy at yesterday's close after seeing this morning's news.</p>
+    <div class="legend" id="legend-money"></div>
+    <div class="canvas-box tall"><canvas id="chart-money"></canvas></div>
+    <div class="money-row">
+      <div><b>₹<span data-v="money.final.impossible"></span></b><span>Impossible: buy at yesterday's close on UP signals</span></div>
+      <div><b>₹<span data-v="money.final.real"></span></b><span>Real: buy at the open, sell at the close on UP signals, after costs</span></div>
+      <div><b>₹<span data-v="money.final.hold"></span></b><span>Buy NIFTY and hold it</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TRACK RECORD ================= -->
+<section id="record">
+  <h2><span class="mono num">04</span> Track record</h2>
+  <p class="section-lead">
+    Every morning's prediction is saved before the market opens, and the real result is added after the close.
+    Nothing is edited later. Wrong calls stay on the list.
+  </p>
+
+  <div class="grid two">
+    <div class="card chart-card">
+      <h3>Daily predictions</h3>
+      <p class="chart-sub" id="record-summary"></p>
+      <div class="table-scroll"><table id="record-table"></table></div>
+      <p class="fine">"Replay" rows were made after the day was over, using only the data that was available that morning. "Live" rows were made before the open.</p>
+    </div>
+
+    <div class="card chart-card">
+      <h3>Last 60 days of the walk-forward check</h3>
+      <p class="chart-sub" id="strip-summary"></p>
+      <div class="strip" id="strip"></div>
+      <div class="legend">
+        <span><i class="sq hit"></i>correct</span>
+        <span><i class="sq miss"></i>wrong</span>
+      </div>
+      <p class="fine">This is a back-test on saved data up to <span data-v="walk_forward.to" data-fmt="date"></span>, not live predictions.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><b>NIFTY 50 direction prediction</b> · Semester machine learning project by Harshul Saini and Vishesh Gupta.</p>
+  <p>Built with pandas, scikit-learn and XGBoost. Prices from Yahoo Finance. Updated every weekday by GitHub Actions.</p>
+  <p class="muted">For learning only. Not investment advice. Past accuracy does not promise future accuracy.</p>
+  <p class="mono muted" id="updated"></p>
+</footer>
+
+<div id="tip" role="tooltip" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

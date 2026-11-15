@@ -6,6 +6,8 @@ Every morning at 9:00 AM, the model predicts whether NIFTY 50 will close today a
 
 The whole project is in one file: **`nifty_direction.ipynb`**. It contains the code, the charts, and the explanation of what was done, why, and why not something else.
 
+**Live website: https://nifty-direction.vercel.app** (today's signal, the results, and a daily track record)
+
 ## Results (see the notebook for details)
 
 | | Accuracy |
@@ -43,9 +45,29 @@ Then choose **Run > Run All Cells**. It takes about 2 minutes.
 | Real-life checks and the next signal | 8 |
 | Conclusion and viva questions | 9 |
 
+## The live website
+
+The website shows the same model and the same numbers as the notebook.
+
+- `site/` is a plain HTML, CSS and JavaScript page. Vercel serves this folder.
+- `live/model.py` builds the features and the final voting model, exactly as in the notebook.
+- `live/make_results.py` repeats the test and the walk-forward check on the saved data and writes `site/data/results.json` (the charts).
+- `live/predict_today.py` downloads fresh prices, trains the model on every finished day and writes today's prediction to `site/data/live.json`.
+- `.github/workflows/daily.yml` runs `predict_today.py` every weekday at about 7:50 AM IST (prediction) and 4:00 PM IST (real result).
+
+A prediction is saved before the market opens and is never changed later. Rows marked "replay" were made after the day, using only the data that was available that morning.
+
+To see the site on your own computer:
+
+```bash
+cd site
+python3 -m http.server 8000      # then open http://localhost:8000
+```
+
 ## Files
 
 - `nifty_direction.ipynb`: the project.
 - `data/`: saved prices from Yahoo Finance (10 series).
 - `requirements.txt`: Python packages.
+- `site/`, `live/`, `.github/`, `vercel.json`: the live website (see above).
 - `old/`: the first version of the project (prediction at 3:30 PM the day before, about 52% accuracy), kept for reference.
