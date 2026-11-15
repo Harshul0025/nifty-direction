@@ -31,6 +31,25 @@ Then choose **Run > Run All Cells**. It takes about 2 minutes.
 - Prices are saved in `data/`, so the numbers are the same on every run.
 - To use the latest prices, set `REFRESH_DATA = True` in Section 0. The written findings quote the numbers of the saved data, so they will differ slightly after a refresh.
 
+### Windows Setup (PowerShell)
+
+From the repository root, create a virtual environment and install dependencies:
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pip install nbconvert ipykernel
+```
+
+Keep `REFRESH_DATA = False` in Section 0 to use the saved prices. Run all cells from PowerShell:
+
+```powershell
+.\.venv\Scripts\python.exe -m nbconvert --to notebook --execute --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=600 --output verified_run.ipynb --output-dir .venv .\nifty_direction.ipynb
+```
+
+The executed copy is saved to `.venv\verified_run.ipynb`.
+
 ## Where each required component is
 
 | Component | Notebook section |
