@@ -2,13 +2,18 @@
 name: Daily prediction
 
 on:
-  schedule:
-    - cron: "20 2 * * 1-5"     # 7:50 AM IST: predict today (before NSE opens at 9:15)
-    - cron: "30 10 * * 1-5"    # 4:00 PM IST: write the real result next to the prediction
+  # Main trigger: cron-job.org calls this workflow at 7:50 AM and 4:00 PM IST (on time).
   workflow_dispatch:           # also allows a manual run from the Actions tab
+  # Backup only: GitHub often starts these hours late. A late run is harmless,
+  # it just fills in results (no prediction after 9:15 AM).
+  schedule:
+    - cron: "20 2 * * 1-5"     # 7:50 AM IST
+    - cron: "30 10 * * 1-5"    # 4:00 PM IST
 
 permissions:
   contents: write              # the job saves site/data/live.json back to the repo
+
+concurrency: daily-prediction  # never run two copies at the same time
 
 jobs:
   predict:
@@ -27,4 +32,4 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add site/data/live.json
-          git diff --cached --quiet || (git commit -m "Daily prediction update" && git push)
+          git diff --cached --quiet || (git commit -m "Daily prediction update" && git pull --rebase && git push)
