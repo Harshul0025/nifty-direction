@@ -2,5 +2,9 @@
   "buildCommand": null,
   "installCommand": null,
   "framework": null,
-  "outputDirectory": "site"
+  "outputDirectory": "site",
+  "crons": [
+    { "path": "/api/trigger", "schedule": "0 2 * * 1-5" },
+    { "path": "/api/trigger", "schedule": "0 11 * * 1-5" }
+  ]
 }

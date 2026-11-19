@@ -2,7 +2,8 @@
 name: Daily prediction
 
 on:
-  # Main trigger: cron-job.org calls this workflow at 7:50 AM and 4:00 PM IST (on time).
+  # Main trigger: Vercel Cron (api/trigger.js, times in vercel.json) starts this workflow
+  # every weekday at about 7:30-8:30 AM and 4:30-5:30 PM IST.
   workflow_dispatch:           # also allows a manual run from the Actions tab
   # Backup only: GitHub often starts these hours late. A late run is harmless,
   # it just fills in results (no prediction after 9:15 AM).
