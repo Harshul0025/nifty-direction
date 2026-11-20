@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-20 15:40 IST",
+ "updated": "2026-11-20 16:55 IST",
  "predictions": [
   {
    "date": "2026-10-30",
@@ -347,9 +347,9 @@
     "nikkei": true,
     "hangseng": true
    },
-   "actual": null,
-   "ret": null,
-   "correct": null
+   "actual": "UP",
+   "ret": 1.12,
+   "correct": false
   }
  ]
 }
