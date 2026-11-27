@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-27 01:14 IST",
+ "updated": "2026-11-27 08:19 IST",
  "predictions": [
   {
    "date": "2026-10-30",
@@ -450,6 +450,31 @@
    "actual": "UP",
    "ret": 0.25,
    "correct": true
+  },
+  {
+   "date": "2026-11-27",
+   "p_up": 0.626,
+   "pred": "UP",
+   "confident": true,
+   "stage": "live",
+   "made_at": "2026-11-27 08:19 IST",
+   "trained_on_days": 2677,
+   "last_finished_day": "2026-11-26",
+   "inputs": {
+    "sp500_night": 0.0,
+    "usvix_night": -5.27,
+    "crude_night": 2.41,
+    "usdinr_night": -0.61,
+    "nikkei_gap": 0.3,
+    "hangseng_gap": 0.17
+   },
+   "asia_open": {
+    "nikkei": true,
+    "hangseng": true
+   },
+   "actual": null,
+   "ret": null,
+   "correct": null
   }
  ]
 }
